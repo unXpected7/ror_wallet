@@ -7,6 +7,9 @@ WORKDIR /app
 # Install Node.js and Yarn (required for Rails asset pipeline)
 RUN apt-get update -qq && apt-get install -y nodejs yarn
 
+# Install Rails globally before running bundle install
+RUN gem install rails
+
 # Copy the Gemfile and Gemfile.lock to the container
 COPY Gemfile Gemfile.lock ./
 
@@ -16,8 +19,5 @@ RUN bundle install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Precompile assets if needed (optional, depending on your app)
-# RUN bundle exec rake assets:precompile
-
 # Command to start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
