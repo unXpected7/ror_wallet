@@ -1,0 +1,34 @@
+swagger: "2.0"
+info:
+  title: Wallet API
+  description: API for wallet transactions
+  version: "1.0.0"
+paths:
+  /transactions:
+    post:
+      summary: Create a transaction
+      parameters:
+        - in: body
+          name: transaction
+          description: Transaction object
+          required: true
+          schema:
+            $ref: '#/definitions/Transaction'
+      responses:
+        201:
+          description: Transaction created
+        422:
+          description: Unprocessable entity
+definitions:
+  Transaction:
+    type: object
+    properties:
+      amount:
+        type: number
+        description: Transaction amount
+      source_wallet_id:
+        type: integer
+        description: ID of the source wallet
+      target_wallet_id:
+        type: integer
+        description: ID of the target wallet
